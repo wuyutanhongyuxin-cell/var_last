@@ -1002,10 +1002,10 @@ class BTCOrderManager {
                                 const timer = setInterval(() => {
                                     attempts++;
 
-                                    // 修复：确认按钮选择器 - 使用 bg-red 类
-                                    const confirmBtn = document.querySelector('button.bg-red');
+                                    // 修复：确认按钮选择器 - 排除 submit-button，只找弹窗中的确认按钮
+                                    const confirmBtn = [...document.querySelectorAll('button')].find(btn => btn.textContent.trim() === '确认' && btn.classList.contains('bg-red') && !btn.hasAttribute('data-testid'));
 
-                                    if (confirmBtn && confirmBtn.textContent.trim() === '确认') {
+                                    if (confirmBtn) {
                                         clearInterval(timer);
                                         setTimeout(() => {
                                             confirmBtn.click();
